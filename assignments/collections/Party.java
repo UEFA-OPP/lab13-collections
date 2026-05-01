@@ -3,30 +3,27 @@ import java.util.List;
 
 public class Party {
 
-    // TODO: private List<Character> members
-    // - new ArrayList<>() -ээр initialize хий
+    private List<Character> members = new ArrayList<>();
 
-    // TODO: add(Character c) → void
-    // - members.add(c)
+    public void add(Character c) { members.add(c); }
+    public void remove(Character c) { members.remove(c); }
+    public int size() { return members.size(); }
 
-    // TODO: remove(Character c) → void
-    // - members.remove(c)
+    public List<Character> getAlive() {
+        List<Character> alive = new ArrayList<>();
+        for (Character c : members) {
+            if (c.isAlive()) alive.add(c);
+        }
+        return alive;
+    }
 
-    // TODO: size() → int
-    // - members.size()
+    public List<Character> sortByHp() {
+        List<Character> sorted = new ArrayList<>(members);
+        sorted.sort((a, b) -> Integer.compare(b.getHp(), a.getHp()));
+        return sorted;
+    }
 
-    // TODO: getAlive() → List<Character>
-    // - зөвхөн c.isAlive() == true баатруудыг агуулсан шинэ List буцаах
-
-    // ─────── 🟡 Stretch (30 оноо) ───────
-
-    // TODO: sortByHp() → List<Character>
-    // - members-ын хуулбар дээр hp-ээр буурах эрэмбээр sort хийнэ
-    // - Comparator эсвэл lambda ашиглана
-    // - жишээ: sorted.sort((a, b) -> Integer.compare(b.getHp(), a.getHp()))
-
-    // ─────── 🔴 Bonus (10 оноо) ───────
-
-    // TODO: getAliveStream() → long
-    // - members.stream().filter(Character::isAlive).count()
+    public long getAliveStream() {
+        return members.stream().filter(Character::isAlive).count();
+    }
 }
