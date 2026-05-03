@@ -5,32 +5,62 @@ import java.util.List;
 
 public class Inventory {
 
-    // TODO: private Map<String, Integer> items
-    // - HashMap<>() -ээр initialize хий
+    // Эд зүйлсийн нэр болон тоо ширхэг
+    private Map<String, Integer> items = new HashMap<>();
 
     // ─────── 🟡 Stretch: item types ───────
-    // TODO: private Map<String, ItemType> itemTypes
-    // - HashMap<>() -ээр initialize хий
+    // Эд зүйлсийн нэр болон түүний төрөл (ItemType)
+    private Map<String, ItemType> itemTypes = new HashMap<>();
 
-    // TODO: addItem(String name) → void
-    // - items.merge(name, 1, Integer::sum) эсвэл if/else
+    // Үндсэн нэмэх функц (Core)
+    public void addItem(String name) {
+        items.merge(name, 1, Integer::sum);
+    }
 
-    // TODO: removeItem(String name) → void
-    // - count буурна
-    // - 0 болох эсвэл доош орвол entry устгана
+    // Төрөлтэйгээр нэмэх функц (Stretch)
+    public void addItem(String name, ItemType type) {
+        addItem(name);
+        itemTypes.put(name, type);
+    }
 
-    // TODO: hasItem(String name) → boolean
-    // - Map-д байна уу, count > 0 уу гэдгийг шалгана
+    public void removeItem(String name) {
+        if (items.containsKey(name)) {
+            int count = items.get(name) - 1;
+            if (count <= 0) {
+                items.remove(name);
+                // itemTypes.remove(name); // Шаардлагатай бол төрлийг нь бас устгаж болно
+            } else {
+                items.put(name, count);
+            }
+        }
+    }
 
-    // TODO: getCount(String name) → int
-    // - items-с count эсвэл 0
+    public boolean hasItem(String name) {
+        return items.getOrDefault(name, 0) > 0;
+    }
+
+    public int getCount(String name) {
+        return items.getOrDefault(name, 0);
+    }
 
     // ─────── 🟡 Stretch (30 оноо) ───────
 
-    // TODO: addItem(String name, ItemType type) → void
-    // - count нэмэх ба itemTypes-д type-ийг хадгална
+    /**
+     * Төрөл тус бүрээр эд зүйлсийг бүлэглэх
+     * Зөвхөн одоо inventory-д байгаа (count > 0) зүйлсийг авна.
+     */
+    public Map<ItemType, List<String>> groupByType() {
+        Map<ItemType, List<String>> grouped = new HashMap<>();
 
-    // TODO: groupByType() → Map<ItemType, List<String>>
-    // - itemTypes-аас ItemType тус бүрд тухайн item нэрсийн жагсаалтыг цуглуулна
-    // - зөвхөн одоо inventory-д count > 0 байгаа item-ийг тооно
+        for (String itemName : items.keySet()) {
+            ItemType type = itemTypes.get(itemName);
+            if (type != null) {
+                // Тухайн төрлийн жагсаалт байхгүй бол шинийг үүсгэнэ
+                grouped.putIfAbsent(type, new ArrayList<>());
+                grouped.get(type).add(itemName);
+            }
+        }
+
+        return grouped;
+    }
 }

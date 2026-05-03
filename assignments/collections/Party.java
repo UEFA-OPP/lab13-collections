@@ -1,32 +1,70 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Party {
 
-    // TODO: private List<Character> members
-    // - new ArrayList<>() -ээр initialize хий
+    // Баатруудын жагсаалтыг ArrayList-ээр үүсгэх
+    private List<Character> members = new ArrayList<>();
 
-    // TODO: add(Character c) → void
-    // - members.add(c)
+    /**
+     * Шинэ баатар нэмэх
+     */
+    public void add(Character c) {
+        members.add(c);
+    }
 
-    // TODO: remove(Character c) → void
-    // - members.remove(c)
+    /**
+     * Баатрыг жагсаалтаас хасах
+     */
+    public void remove(Character c) {
+        members.remove(c);
+    }
 
-    // TODO: size() → int
-    // - members.size()
+    /**
+     * Нийт баатруудын тоог буцаах
+     */
+    public int size() {
+        return members.size();
+    }
 
-    // TODO: getAlive() → List<Character>
-    // - зөвхөн c.isAlive() == true баатруудыг агуулсан шинэ List буцаах
+    /**
+     * Зөвхөн амьд байгаа (hp > 0) баатруудыг шүүж авах
+     */
+    public List<Character> getAlive() {
+        List<Character> aliveOnes = new ArrayList<>();
+        for (Character c : members) {
+            if (c.isAlive()) {
+                aliveOnes.add(c);
+            }
+        }
+        return aliveOnes;
+    }
 
     // ─────── 🟡 Stretch (30 оноо) ───────
 
-    // TODO: sortByHp() → List<Character>
-    // - members-ын хуулбар дээр hp-ээр буурах эрэмбээр sort хийнэ
-    // - Comparator эсвэл lambda ашиглана
-    // - жишээ: sorted.sort((a, b) -> Integer.compare(b.getHp(), a.getHp()))
+    /**
+     * Баатруудыг HP-ээр нь буурах дарааллаар эрэмбэлсэн хуулбар жагсаалт буцаах
+     */
+    public List<Character> sortByHp() {
+        // Үндсэн жагсаалтыг өөрчлөхгүйн тулд хуулбар үүсгэнэ
+        List<Character> sorted = new ArrayList<>(members);
+
+        // b.getHp() ба a.getHp()-г харьцуулснаар ихээс бага руу (буурах) эрэмбэлнэ
+        sorted.sort((a, b) -> Integer.compare(b.getHp(), a.getHp()));
+
+        return sorted;
+    }
 
     // ─────── 🔴 Bonus (10 оноо) ───────
 
-    // TODO: getAliveStream() → long
-    // - members.stream().filter(Character::isAlive).count()
+    /**
+     * Stream API ашиглан амьд баатруудын тоог олох
+     */
+    public long getAliveStream() {
+        return members.stream()
+                .filter(Character::isAlive)
+                .count();
+    }
 }

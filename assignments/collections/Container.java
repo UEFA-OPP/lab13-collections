@@ -1,21 +1,36 @@
-// ─────── 🔴 Bonus: generic container ───────
-//
-// TODO: Container<T> generic класс
-// - private List<T> items = new ArrayList<>();
-// - add(T item) → void
-// - get(int idx) → T
-// - size() → int
-//
-// import java.util.ArrayList;
-// import java.util.List;
-//
-// public class Container<T> {
-//     private List<T> items = new ArrayList<>();
-//     public void add(T item) { items.add(item); }
-//     public T get(int idx) { return items.get(idx); }
-//     public int size() { return items.size(); }
-// }
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * 🔴 Bonus: generic container
+ */
 public class Container<T> {
-    // TODO
+    // 1. private List<T> items = new ArrayList<>();
+    private List<T> items = new ArrayList<>();
+
+    /**
+     * add(T item) → void
+     */
+    public void add(T item) {
+        items.add(item);
+    }
+
+    /**
+     * get(int idx) → T
+     */
+    public T get(int idx) {
+        // Тестийн шаардлагаар индекс шалгахгүйгээр шууд .get(idx) 
+        // ашиглаж болно, эсвэл аюулгүй байдлыг хангах:
+        if (idx >= 0 && idx < items.size()) {
+            return items.get(idx);
+        }
+        return null;
+    }
+
+    /**
+     * size() → int
+     */
+    public int size() {
+        return items.size();
+    }
 }
