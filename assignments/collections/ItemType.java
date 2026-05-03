@@ -7,4 +7,8 @@
 
 public enum ItemType {
     // TODO
+    POTION,
+    WEAPON,
+    ARMOR,
+    KEY
 }
