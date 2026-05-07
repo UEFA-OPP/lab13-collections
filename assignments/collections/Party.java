@@ -1,32 +1,42 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Party {
+    private List<Character> members = new ArrayList<>();
 
-    // TODO: private List<Character> members
-    // - new ArrayList<>() -ээр initialize хий
+    public void add(Character c) {
+        members.add(c);
+    }
 
-    // TODO: add(Character c) → void
-    // - members.add(c)
+    public void remove(Character c) {
+        members.remove(c);
+    }
 
-    // TODO: remove(Character c) → void
-    // - members.remove(c)
+    public int size() {
+        return members.size();
+    }
 
-    // TODO: size() → int
-    // - members.size()
+    public List<Character> getAlive() {
+        List<Character> alive = new ArrayList<>();
+        for (Character c : members) {
+            if (c.isAlive()) {
+                alive.add(c);
+            }
+        }
+        return alive;
+    }
 
-    // TODO: getAlive() → List<Character>
-    // - зөвхөн c.isAlive() == true баатруудыг агуулсан шинэ List буцаах
+    // Stretch: Sort by HP descending without mutating original list
+    public List<Character> sortByHp() {
+        List<Character> sorted = new ArrayList<>(members);
+        sorted.sort((a, b) -> Integer.compare(b.getHp(), a.getHp()));
+        return sorted;
+    }
 
-    // ─────── 🟡 Stretch (30 оноо) ───────
-
-    // TODO: sortByHp() → List<Character>
-    // - members-ын хуулбар дээр hp-ээр буурах эрэмбээр sort хийнэ
-    // - Comparator эсвэл lambda ашиглана
-    // - жишээ: sorted.sort((a, b) -> Integer.compare(b.getHp(), a.getHp()))
-
-    // ─────── 🔴 Bonus (10 оноо) ───────
-
-    // TODO: getAliveStream() → long
-    // - members.stream().filter(Character::isAlive).count()
+    // Bonus: Stream API usage
+    public long getAliveStream() {
+        return members.stream()
+                .filter(Character::isAlive)
+                .count();
+    }
 }
